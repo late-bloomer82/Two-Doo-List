@@ -2,12 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  // Entry point for your application
+  // Entry point for the application
   entry: './src/index.js',
 
-  // Output configuration
+  
   output: {
-    // Output directory (absolute path)
+    
     path: path.resolve(__dirname, 'dist'),
 
     // Output filename
@@ -18,6 +18,15 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(woff|woff2|ttf|otf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[name].[ext]',
+          },
+        },
       },
     ],
   },
