@@ -38,12 +38,49 @@
 
             <div class="main-section">
                 <div class="main-section-container">
-                <h2>Home</h2>
+                <div class="main-section-header">  
+                <h2 id="project-title">Home</h2>
+                </div>
                 <div class="content">
                     No tasks to be displayed.
-                </div>
+                
                 </div>
             </div>
+
+            <dialog>
+                hey whats up
+            </dialog>
+            <dialog id="taskModal">
+                <form id="addTaskForm">
+                    <button id="closeFormButton">X</button>
+                    <h2>Add Task</h2>
+
+                    <h3>Title</h3>
+                    <input type="text" placeholder="Enter your task title..." id="title" style="height: 30px; width: 300px; border-radius: 2px;">
+
+                    <h3>Description</h3>
+                    <textarea id="description" rows="4" cols="40"></textarea>
+
+
+                    <h3>Priority</h4>
+                    <select id="priority" style="width:300px ; height: 30px;">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+
+                    <h3>Due Date</h3>
+                    <input type="date" placeholder="mm/dd/yyyy" id="dueDate" style="width:300px ; height: 30px;">
+
+                    <div class="formButtonContainer">
+                        <button style="width: 100px; height: 40px; border-radius: 10px;" id="formCancelButton">Cancel</button>
+                        <button style="width: 100px; height: 40px; border-radius: 10px;" id="formAddButton">Add</button>
+                    </div>
+
+                    
+                </form>
+            </dialog>
     </div>    
 </body>
 
