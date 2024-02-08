@@ -3,6 +3,15 @@ import webIcon from '../dist/images/webIcon.a68fad7b57e4f4a503508e76f0d1b7ff.a68
 import homeIcon from '../dist/images/home.8e576291288b2ca88c8f015f874b4670.8e576291288b2ca88c8f015f874b4670.svg';
 import todayIcon from '../dist/images/calendar-today.8d058f5ee3f52cd80cdb39b07c281901.8d058f5ee3f52cd80cdb39b07c281901.svg';
 import weekIcon from '../dist/images/calendar-week.58f9738a120204d45b7f7fe1b37e4fbd.58f9738a120204d45b7f7fe1b37e4fbd.svg';
+import priorityIconGreen from './images/priorityIconGreen.svg';
+import priorityIconYellow from './images/priorityIconYellow.svg';
+import priorityIconRed from './images/priorityIconRed.svg';
+import priorityIconDarkRed from './images/priorityIconDarkRed.svg';
+import checkIcon from './images/check-circle.svg';
+import dotsIcon from './images/dots-horizontal.svg'
+//import object function
+import { createToDo } from './toDo';
+
 
 //Export function
 export {mainPageContent};
@@ -75,18 +84,28 @@ function mainPageContent(){
     week.style.display = 'flex';
 
 
-    //Create and select necessary elements
+    //Select necessary elements in global function scope
     const projectButton = document.getElementById('projectButton');
     const projectSection = document.querySelector('.project');
     const projectList = document.querySelector('.project-list');
-    const projectContainer = document.querySelector('.project-container')
+    const projectContainer = document.querySelector('.project-container');
+    const mainSectionHeader = document.querySelector('.main-section-header');
+    const mainSection = document.querySelector('.main-section');
+    const projectTitle = document.getElementById('project-title');
+    const taskModal = document.getElementById('taskModal');
+    const formCancelButton = document.getElementById('formCancelButton');
+    const formAddButton = document.getElementById('formAddButton');
+    const mainSectionDiv = document.querySelector('.content');
 
+    //Create necessary elements in global function scope
     const form = document.createElement('form');
     const input = document.createElement('input');
     const cancelButton = document.createElement('button');
     const addButton = document.createElement('button');
     const buttonContainer = document.createElement('div');
+    const addTaskbutton = document.createElement('button')
 
+    var projectItem;
 
 
     projectButton.addEventListener('click', ()=>{
@@ -145,32 +164,54 @@ function mainPageContent(){
 
         //Handling errors
         projectButton.disabled = false;
+        //Projects List
+        projectItem = document.createElement('li');
         let value = input.value;
         input.value = "";
-        form.remove()
-
-        //Create project
-        const projectItem = document.createElement('li');
-
         projectItem.textContent = value;
         projectItem.style.cursor = 'pointer';
         projectItem.style.borderRadius = '8px';
         projectItem.style.padding = '10px';
         projectList.appendChild(projectItem);
 
-        // Add an event listener for mouseover (hover)
-        projectItem.addEventListener('mouseover', function() {
-           projectItem.style.backgroundColor ='#e6ebf4'
-        });
+         // Hover styling for the individual list items
+         projectItem.addEventListener('mouseover', ()=>{
+            projectItem.style.backgroundColor ='#e6ebf4'
+         });
+ 
+         
+         projectItem.addEventListener('mouseout', ()=>{
+             projectItem.style.backgroundColor = '#f0f5fe';
+         });
+ 
+         
+         projectItem.addEventListener('click', function addButton(){
+             addTaskbutton.style.width = '100px';
+             addTaskbutton.style.height = '40px';
+             addTaskbutton.style.borderRadius = '15px';
+             addTaskbutton.style.marginTop = '15px';
+             addTaskbutton.textContent = 'Add Task';
+            
+             mainSectionHeader.style.display = 'flex';
+             mainSectionHeader.style.justifyContent = 'space-between';
 
-        // Add an event listener for mouseout (mouseleave)
-        projectItem.addEventListener('mouseout', function() {
-            projectItem.style.backgroundColor = '#f0f5fe';
-        });
+             let projectTextContent = projectItem.textContent;
+             projectTitle.textContent =  projectTextContent;
+            
+             mainSectionHeader.appendChild(addTaskbutton)
+ 
+         })
 
+        
+        form.remove()
+
+        
+        
 
         
     })
+
+    
 
     //Cancel Button Event Listener
     cancelButton.addEventListener('click', function(event){
@@ -185,6 +226,99 @@ function mainPageContent(){
         
     })
 
+
+
+    
+    //Add Task Event Listener
+    addTaskbutton.addEventListener('click', ()=>{
+         taskModal.showModal();
+
+
+    })
+
+
+    //Form Add Button EL
+    formAddButton.addEventListener('click', (event)=>{
+
+    //Prevent page refresh upon click
+    event.preventDefault();
+
+    ///Getting the value of each user input
+    const titleValue = document.getElementById('title').value;
+    const descriptionValue = document.getElementById('description').textContent
+    const priorityValue = document.getElementById('priority').value;
+    const dueDateValue = document.getElementById('dueDate').value;
+
+    //Create toDo Object
+    const toDo = createToDo(titleValue,descriptionValue,priorityValue,dueDateValue);
+     
+    mainSectionDiv.remove();
+
+    const toDoDiv = document.createElement('div');
+    toDoDiv.style.width = '800px';
+    toDoDiv.style.height = '100px';
+    toDoDiv.style.backgroundColor = '#f0f5fe';
+    toDoDiv.style.display = 'flex';
+    toDoDiv.style.justifyContent = 'space-between';
+    toDoDiv.style.borderRadius ='10px';
+    toDoDiv.style.padding ='20px';
+
+    //Creating both sections of the toDo container
+    const propertiesSection = document.createElement('div');
+    const iconSection = document.createElement('div')
+
+
+    //Creating the properties sections elements
+    const title = document.createElement('h3')
+    title.appendChild(toDo.title)
+
+    const priorityIcon = document.createElement('img');
+    img.src = priorityIcon;
+    title.appendChild(priorityIcon)
+    //i have to implement a logic for the img and display the correct img 
+
+    //Project name
+    propertiesSection.appendChild(projectItem.textContent)
+
+    const dueDate = document.createElement('p');
+    dueDate.appendChild(toDo.dueDate);
+
+
+
+
+
+
+    //Creating the iconSection
+    iconSection.appendChild(checkIcon)
+    iconSection.appendChild(dotsIcon)
+    
+     
+    
+    
+    
+    
+    console.log(taskModal.close());
+    mainSection.appendChild(toDoDiv)
+
+    
+    })
+
+
+    //Preventing default refresh for the Dialog Modal X button
+     document.getElementById('closeFormButton').addEventListener('click',(event )=>{
+        event.preventDefault();
+        taskModal.close();
+    })
+    
+
+    //Form Cancel Button EL
+    formCancelButton.addEventListener('click', (event)=>{
+        taskModal.close()
+        
+        //Prevent page refresh upon click
+        event.preventDefault();
+
+    })
 
 }
 
