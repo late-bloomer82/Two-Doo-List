@@ -10,10 +10,10 @@ import { createToDo } from './toDo';
 
 //import function
 import { addToDo,addTaskObjectToProject,toggleNoTasksDisplay } from './toDo';
-import { addHomeObject } from './home';
-import {addTodayObject} from './today';
-import { addWeekObject } from './week';
-import { compareDates } from './compareDates';
+import { displayHomeArray } from './home';
+import {displayTodayArray} from './today';
+import { displayWeekArray } from './week';
+import { addTaskToRespectiveArray } from "./compareDates";
 
 //Export functions
 export {mainPageContent};
@@ -81,10 +81,10 @@ function mainPageContent(){
     const today = document.getElementById('today');
     const week = document.getElementById('week');
 
-    //Display panel
-    home.addEventListener('click', addHomeObject)
-    today.addEventListener('click', addTodayObject)
-    week.addEventListener('click', addWeekObject)
+    //Display calendar panels
+    home.addEventListener('click', displayHomeArray )
+    today.addEventListener('click', displayTodayArray)
+    week.addEventListener('click', displayWeekArray)
     
     //create images
     const homeImg = document.createElement('img');
@@ -261,11 +261,15 @@ const descriptionValue = document.getElementById('description').value
 const priorityValue = document.getElementById('priority').value;
 const dueDateValue = document.getElementById('dueDate').value;
 
-toDo = createToDo(titleValue,descriptionValue,dueDateValue,priorityValue);
+toDo = createToDo(titleValue,descriptionValue,dueDateValue,priorityValue,projectName);
     
 addTaskObjectToProject(toDo);
 toggleNoTasksDisplay(projectName)
 displayProject(projectName)
+
+//Add Task Object to its calendar array.
+addTaskToRespectiveArray()
+console.log(toDo.dueDate)
 taskModal.close();
     
 })
