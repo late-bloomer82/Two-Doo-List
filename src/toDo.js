@@ -8,18 +8,20 @@ import dotsIcon from './images/dots-horizontal.svg';
 import {mainSectionContainer,toDo,projectItem, projectTasks,value, projectName, projects} from './dom'
 
 
-export {toggleNoTasksDisplay,addContent,addTaskObjectToProject,createToDo, createTaskImgs, getPriority}
+export {textContent,toggleNoTasksDisplay,addContent,addTaskObjectToProject,createToDo, createTaskImgs, getPriority}
 
 export const taskContainer = document.querySelector('.tasksContainer');
+export const noTasks = document.querySelector('.noTasks');
 
 //Create factory function to create objects for each toDoItems
 
-function createToDo(title,description,dueDate,priority){
+function createToDo(title,description,dueDate,priority,projectName){
    return{
     title,
     description,
     dueDate,
-    priority
+    priority,
+    projectName
    }
 }
 
@@ -30,7 +32,9 @@ styleDiv(taskDiv)
 return taskDiv
 }
 
-
+function textContent(element, text){
+   element.textContent = text
+}
 
 
 function styleDiv(div){
@@ -134,7 +138,6 @@ return {
  
 
 function toggleNoTasksDisplay(projectName){
-   const noTasks = document.querySelector('.noTasks');
    if(projects[projectName].length===0){
       noTasks.style.display = 'flex'
   }
