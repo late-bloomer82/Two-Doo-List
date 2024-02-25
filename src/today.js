@@ -1,8 +1,9 @@
 import { taskContainer,addContent,noTasks, textContent } from "./toDo"
 import { addTaskbutton, projectTitle } from "./dom";
+import {lookForArrays } from "./storage";
 export {displayTodayArray};
 
-export const todayTasks = [];
+export const todayTasks = lookForArrays('todayTasks') || []
 
 
 function displayTodayArray(){
@@ -24,6 +25,7 @@ function displayTodayArray(){
         const taskPriority = taskObject.priority;
         const projectName = taskObject.projectName
         addContent(taskTitle, taskPriority, projectName, taskDescription, taskDueDate);
+        textContent(projectTitle,"Today");
 
     }
 }

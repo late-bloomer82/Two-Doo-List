@@ -1,8 +1,9 @@
 import { taskContainer,addContent, noTasks,textContent } from "./toDo"
 import { addTaskbutton, projectTitle } from "./dom";
+import {lookForArrays } from "./storage";
 export {displayHomeArray};
 
-export const homeTasks = []
+export const homeTasks = lookForArrays('homeTasks') || []
 
 
 function displayHomeArray(){
@@ -26,6 +27,7 @@ function displayHomeArray(){
         const taskPriority = taskObject.priority;
         const projectName = taskObject.projectName
         addContent(taskTitle, taskPriority, projectName, taskDescription, taskDueDate);
+        textContent(projectTitle,"Home");
 
     }
 }
