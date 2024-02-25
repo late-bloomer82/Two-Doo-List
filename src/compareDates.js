@@ -55,9 +55,7 @@ function addTaskToRespectiveArray(){
        
        weekTasks.push(toDo);
     }
-    console.log("Home" , homeTasks)
-    console.log("Today" , todayTasks)
-    console.log("Week" , weekTasks)
+    
  
  }
 
