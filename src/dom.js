@@ -10,7 +10,9 @@ import { createToDo } from './toDo';
 
 //import function
 import { addToDo,addTaskObjectToProject,toggleNoTasksDisplay } from './toDo';
-import { displayHomeArray } from './home';
+import { displayHomeArray, homeTasks } from './home';
+import { todayTasks } from './today';
+import { weekTasks } from './week';
 import {displayTodayArray} from './today';
 import { displayWeekArray } from './week';
 import { addTaskToRespectiveArray } from "./compareDates";
@@ -22,18 +24,20 @@ export {mainPageContent};
 import { storedDivContent } from './toDo';
 import { heading} from './toDo';
 import { displayProject } from './displayProject';
+import { lookForProjects,saveProject, lookForProjectssplayStorage, saveCalendarArray, saveProjectLiArray, retrieveProjectLi } from './storage';
 
 //Global variables for reusability
 
-export let projectItem;
+
 export let value
 export let toDo;
 export let projectName;
 
+
     
 //Select necessary elements in global scope
 const projectButton = document.getElementById('projectButton');
-const projectList = document.querySelector('.project-list');
+export const projectList = document.querySelector('.project-list');
 const projectContainer = document.querySelector('.project-container');
 const mainSectionHeader = document.querySelector('.main-section-header');
 export const mainSection = document.querySelector('.main-section');
@@ -46,10 +50,14 @@ export const mainSectionContainer = document.querySelector('.main-section-contai
 
 export const addTaskbutton = document.createElement('button')
 
-// Define an object to store tasks for each project
-export const projects = {};
 
-    
+// Define an object to store tasks for each project
+export let projects = lookForProjects() || {}; 
+
+
+
+export let projectItems = retrieveProjectLi() || [];
+console.log(projectItems)
     
 function mainPageContent(){
     
@@ -195,16 +203,19 @@ event.preventDefault();
 //Handling errors
 projectButton.disabled = false;
 //Projects List
-projectItem = document.createElement('li');
+let projectItem = document.createElement('li');
+
 projectItem.className ='projectItem';
 value = input.value;
 input.value = "";
 projectItem.textContent = value;
-projectItem.style.cursor = 'pointer';
-projectItem.style.borderRadius = '8px';
-projectItem.style.padding = '10px';
 projectList.appendChild(projectItem);
-        
+
+projectItems.push(projectItem.textContent);
+
+saveProjectLiArray(projectItems)
+console.log(projectItem);
+console.log(projectItems);
 
 projects[value] = [];
         
@@ -226,13 +237,14 @@ projectTitle.textContent = projectName;
 
 toggleNoTasksDisplay(projectName)
 displayProject(projectName)
+
         
 })
 //remove project form
 form.remove()
     
 })
-       
+
    
 //Cancel Button Event Listener
 cancelButton.addEventListener('click', function(event){
@@ -248,6 +260,7 @@ form.remove();
 addTaskbutton.addEventListener('click', ()=>{
 taskModal.showModal();
 })
+
 
 //Form Add Button EL
 formAddButton.addEventListener('click', (event)=>{
@@ -269,10 +282,17 @@ displayProject(projectName)
 
 //Add Task Object to its calendar array.
 addTaskToRespectiveArray()
-console.log(toDo.dueDate)
+saveCalendarArray('homeTasks',homeTasks)
+saveCalendarArray('todayTasks',todayTasks)
+saveCalendarArray('weekTasks',weekTasks)
+
+ //Save global project object to Storage
+ saveProject(projects);
+ console.log('Projects after adding task:', projects);
 taskModal.close();
     
 })
+
 
 //Preventing default refresh for the Dialog Modal X button
 document.getElementById('closeFormButton').addEventListener('click',(event )=>{
