@@ -101,10 +101,7 @@ li{
     border-radius: 10px;
 }
 
-.tasksContainer{
-    /* height: 800px;
-    width: 800px; */
-}
+
 
 .headingSection{
     display: flex;
@@ -196,8 +193,12 @@ li{
 
 .projectItem{
     transition: background-color 0.3 ease;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 .projectItem:hover{
     background-color: #e6ebf4;
+    
 }
