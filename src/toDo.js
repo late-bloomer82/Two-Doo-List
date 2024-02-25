@@ -5,7 +5,8 @@ import priorityIconRed from './images/priorityIconRed.svg';
 import priorityIconDarkRed from './images/priorityIconDarkRed.svg';
 import checkIcon from './images/check-circle.svg';
 import dotsIcon from './images/dots-horizontal.svg';
-import {mainSectionContainer,toDo,projectItem, projectTasks,value, projectName, projects} from './dom'
+import {projectTitle, projects} from './dom'
+import { saveProject } from './storage';
 
 
 export {textContent,toggleNoTasksDisplay,addContent,addTaskObjectToProject,createToDo, createTaskImgs, getPriority}
@@ -68,6 +69,8 @@ function addContent(title,priority,project,description,dueDate){
 
    const projectParagraph = document.createElement('p');
    projectParagraph.textContent = project;
+
+   projectTitle.textContent = project;
 
    const descriptionBox = document.createElement('p');
    descriptionBox.textContent = "Description : " + description;
@@ -153,6 +156,6 @@ function addTaskObjectToProject(object){
 
    projects[titleContent].push(object);
 
-
+  
 }
 
