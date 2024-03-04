@@ -1,6 +1,6 @@
-import { taskContainer,addContent,noTasks,textContent } from "./toDo";
+import { taskContainer,addContent,noTasks,textContent } from "./js_modules";
 import { addTaskbutton, projectTitle } from "./dom";
-import {lookForArrays } from "./storage";
+import {lookForArrays} from "./storage";
 export {displayWeekArray};
 
 export const weekTasks = lookForArrays('weekTasks') || [];
@@ -9,7 +9,7 @@ export const weekTasks = lookForArrays('weekTasks') || [];
 function displayWeekArray(){
     textContent(projectTitle,"This Week");
     taskContainer.innerHTML ='';
-    addTaskbutton.remove();
+    addTaskbutton.style.display = 'none'
 
 
     if(weekTasks.length === 0){
@@ -27,8 +27,10 @@ function displayWeekArray(){
         const taskDueDate = taskObject.dueDate;
         const taskPriority = taskObject.priority;
         const projectName = taskObject.projectName
-        addContent(taskTitle, taskPriority, projectName, taskDescription, taskDueDate);
+        const id = taskObject.id
+        addContent(taskTitle, taskPriority, projectName, taskDescription, taskDueDate,id);
         textContent(projectTitle,"This Week");
     }
 }
+
 }
