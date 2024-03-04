@@ -1,34 +1,19 @@
 //import images
-import webIcon from '../dist/images/webIcon.a68fad7b57e4f4a503508e76f0d1b7ff.a68fad7b57e4f4a503508e76f0d1b7ff.jpg';
-import homeIcon from '../dist/images/home.8e576291288b2ca88c8f015f874b4670.8e576291288b2ca88c8f015f874b4670.svg';
-import todayIcon from '../dist/images/calendar-today.8d058f5ee3f52cd80cdb39b07c281901.8d058f5ee3f52cd80cdb39b07c281901.svg';
-import weekIcon from '../dist/images/calendar-week.58f9738a120204d45b7f7fe1b37e4fbd.58f9738a120204d45b7f7fe1b37e4fbd.svg';
-import  {toDoDiv,  } from './toDo';
+import { webIcon, homeIcon, todayIcon, weekIcon,closeIcon } from './index';
 
-//import object function
-import { createToDo } from './toDo';
-
-//import function
-import { addToDo,addTaskObjectToProject,toggleNoTasksDisplay } from './toDo';
+//import functions and stuff
+import { closeProject,taskDiv, updateTask,  appendToDom,projectItemMouseOut,projectItemMouseover,generateRandomId,addTaskObjectToProject,toggleNoTasksDisplay,createToDo,dialogCancelButton, dialogCloseButton, editMode, findTaskById, homeFindTaskById,todayFindTaskById, toggleEdit, weekFindTaskById} from './js_modules';
 import { displayHomeArray, homeTasks } from './home';
-import { todayTasks } from './today';
-import { weekTasks } from './week';
-import {displayTodayArray} from './today';
-import { displayWeekArray } from './week';
-import { addTaskToRespectiveArray } from "./compareDates";
+import { todayTasks,displayTodayArray } from './today';
+import { weekTasks,displayWeekArray} from './week';
+import { addTaskToRespectiveArray, editTaskArray } from "./compareDates";
+import { displayProject } from './displayProject';
+import { lookForProjects,saveProject, saveCalendarArray, saveProjectLiArray, retrieveProjectLi } from './storage';
 
 //Export functions
 export {mainPageContent};
 
-//import stuff
-import { storedDivContent } from './toDo';
-import { heading} from './toDo';
-import { displayProject } from './displayProject';
-import { lookForProjects,saveProject, lookForProjectssplayStorage, saveCalendarArray, saveProjectLiArray, retrieveProjectLi } from './storage';
-
 //Global variables for reusability
-
-
 export let value
 export let toDo;
 export let projectName;
@@ -48,16 +33,21 @@ const formAddButton = document.getElementById('formAddButton');
 export const mainSectionContainer = document.querySelector('.main-section-container')
 
 
-export const addTaskbutton = document.createElement('button')
-
-
-// Define an object to store tasks for each project
+ 
+ 
+// Retrieve projects object from localStorage
 export let projects = lookForProjects() || {}; 
 
-
-
+// Retrieve project items array from localStorage
 export let projectItems = retrieveProjectLi() || [];
-console.log(projectItems)
+
+export const addTaskbutton = document.createElement('button')
+addTaskbutton.className = 'addTaskButton'
+addTaskbutton.textContent = 'Add Task';
+mainSectionHeader.appendChild(addTaskbutton)
+
+
+
     
 function mainPageContent(){
     
@@ -67,16 +57,17 @@ function mainPageContent(){
     const cancelButton = document.createElement('button');
     const addButton = document.createElement('button');
     const buttonContainer = document.createElement('div');
-   
+    buttonContainer.className = 'projectButtonContainer';
 
-    //Header Section
+    
+   //Header Section
 
     const header = document.querySelector('header');
+
     const websiteLogo = document.createElement('img');
+    websiteLogo.className = 'websiteLogo';
     websiteLogo.src = webIcon;
-    websiteLogo.style.width = '80px';
-    websiteLogo.style.height = '80px';
-    websiteLogo.style.borderRadius = '20px'
+    
     header.appendChild(websiteLogo)
     header.style.display = 'flex';
     header.style.justifyContent = 'center';
@@ -103,23 +94,11 @@ function mainPageContent(){
     todayImg.src = todayIcon;
     weekImg.src = weekIcon;
     
-    //style imgs
-    homeImg.style.width = '40px';
-    homeImg.style.height = '40px';
     
-
-    todayImg.style.width = '40px';
-    todayImg.style.height = '40px';
-  
-
-    weekImg.style.width = '40px';
-    weekImg.style.height = '40px';
-  
-   
     //create h elements
-    const homeHeading = document.createElement('h3');
-    const todayHeading = document.createElement('h3');
-    const weekHeading = document.createElement('h3');
+    const homeHeading = document.createElement('h4');
+    const todayHeading = document.createElement('h4');
+    const weekHeading = document.createElement('h4');
 
     homeHeading.textContent = 'Home';
     todayHeading.textContent = 'Today';
@@ -149,36 +128,20 @@ function mainPageContent(){
   
     projectButton.addEventListener('click', ()=>{
 
-        //Styling the elements
+        //Creating project form 
+        input.className = 'projectInput';
         input.type = 'text';
-        input.placeholder = 'Enter your project name';
-        input.style.borderRadius = '5px';
-        input.style.height = '30px';
-        input.style.width = '170px';
+        input.placeholder = 'Enter project name...';
+       
+      
         
-        
-        buttonContainer.style.display ='flex';
-        buttonContainer.style.marginTop = '10px';
-        buttonContainer.style.gap = '20px';
-
+        cancelButton.className = 'projectCancelButton';
         cancelButton.textContent = 'Cancel';
-        cancelButton.style.color = 'white';
-        cancelButton.style.backgroundColor = '#C576F6'
-        cancelButton.style.border = '1px solid #C576F6';
-        cancelButton.style.borderRadius = '10px'
-        cancelButton.style.width = '75px';
-        cancelButton.style.height = '30px';
-        cancelButton.style.cursor = 'pointer';
+        
 
+        addButton.className = 'projectAddButton';
         addButton.textContent ='Add';
-        addButton.style.color ='white';
-        addButton.style.backgroundColor = '#FFD700'
-        addButton.style.border = '1px solid #FFD700';
-        addButton.style.borderRadius = '10px';
-        addButton.style.width = '75px';
-        addButton.style.height = '30px';
-        addButton.style.cursor = 'pointer';
-
+        
         //Appendin everythin
         projectContainer.appendChild(form);
         form.appendChild(input);
@@ -191,8 +154,7 @@ function mainPageContent(){
 
         
     })
-
-    
+  
 
 //Add Button Event Listener
 addButton.addEventListener('click', function(event){
@@ -200,52 +162,76 @@ addButton.addEventListener('click', function(event){
 //Prevent page refresh upon click
 event.preventDefault();
 
-//Handling errors
+//Error handling for if user enters an empty string.
+if(input.value.trim() === ""){
+    return
+}
+//Disabling project button
 projectButton.disabled = false;
+
 //Projects List
 let projectItem = document.createElement('li');
 
+// Create close button
+const closeButton = document.createElement('img');
+closeButton.style.display = 'none';
+closeButton.src = closeIcon;
+
+
 projectItem.className ='projectItem';
 value = input.value;
+
 input.value = "";
 projectItem.textContent = value;
+
 projectList.appendChild(projectItem);
+appendToDom(closeButton,projectItem)
 
-projectItems.push(projectItem.textContent);
+//Add mouse effect to show close button
+projectItemMouseover(projectItem,closeButton);
+projectItemMouseOut(projectItem,closeButton);
 
-saveProjectLiArray(projectItems)
-console.log(projectItem);
-console.log(projectItems);
-
-projects[value] = [];
-        
-        
-//Individual projects 
-projectItem.addEventListener('click', (event)=>{
-addTaskbutton.style.width = '100px';
-addTaskbutton.style.height = '40px';
-addTaskbutton.style.borderRadius = '15px';
-addTaskbutton.style.marginTop = '15px';
-addTaskbutton.textContent = 'Add Task';
-// console.log('dog')
-mainSectionHeader.style.display = 'flex';
-mainSectionHeader.style.justifyContent = 'space-between';
-mainSectionHeader.appendChild(addTaskbutton)
-            
-projectName = event.target.textContent;
-projectTitle.textContent = projectName; 
-
-toggleNoTasksDisplay(projectName)
-displayProject(projectName)
-
-        
+//Event listener for closing the project
+closeButton.addEventListener('click', (event)=>{
+    event.stopPropagation();
+    closeProject(projectItem,projectItem.textContent)
 })
+
+        
+//Pushing project to projectItems array and saving it.
+projectItems.push(projectItem.textContent);
+saveProjectLiArray(projectItems)
+
+//Add empty array project to projects object
+projects[value] = [];
+
+//Save projects object
+saveProject(projects)
+
+projectItem.addEventListener('click', (event)=>{
+    
+    
+    addTaskbutton.style.display = 'flex';
+    projectName = event.target.textContent;
+    
+    
+    toggleNoTasksDisplay(projectName)
+    displayProject(projectName)
+    projectTitle.textContent = projectName; 
+  
+   
+            
+    })
+        
+
 //remove project form
 form.remove()
-    
+ 
 })
 
-   
+
+
+
 //Cancel Button Event Listener
 cancelButton.addEventListener('click', function(event){
 //Prevent page refresh upon click
@@ -258,7 +244,7 @@ form.remove();
 
  //Add Task Event Listener
 addTaskbutton.addEventListener('click', ()=>{
-taskModal.showModal();
+taskModal.style.display = 'flex'
 })
 
 
@@ -268,48 +254,96 @@ formAddButton.addEventListener('click', (event)=>{
 //Prevent page refresh upon click
 event.preventDefault();
 
+const key = projectTitle.textContent
+
+
 ///Getting the value of each user input
 const titleValue = document.getElementById('title').value;
 const descriptionValue = document.getElementById('description').value
 const priorityValue = document.getElementById('priority').value;
 const dueDateValue = document.getElementById('dueDate').value;
+const id = generateRandomId()
 
-toDo = createToDo(titleValue,descriptionValue,dueDateValue,priorityValue,projectName);
+if (editMode) {
+    // Handle Update Logic
+    const dueDateValue = document.getElementById('dueDate').value;
+    const taskId = taskDiv.getAttribute('data-id');
     
-addTaskObjectToProject(toDo);
-toggleNoTasksDisplay(projectName)
-displayProject(projectName)
+    const task = findTaskById(taskId);
+    const homeTask = homeFindTaskById(taskId);
+    const todayTask = todayFindTaskById(taskId);
+    
+    const weekTask = weekFindTaskById(taskId);
 
-//Add Task Object to its calendar array.
+    updateTask(task, taskId, titleValue, descriptionValue, dueDateValue, priorityValue);
+    updateTask(homeTask, taskId, titleValue, descriptionValue, dueDateValue, priorityValue);
+    if(todayTask){updateTask(todayTask, taskId, titleValue, descriptionValue, dueDateValue, priorityValue)};
+    if(weekTask){updateTask(weekTask, taskId, titleValue, descriptionValue, dueDateValue, priorityValue)};
+
+    editTaskArray(task, taskId)
+   
+    //Save calendar arrays
+    saveCalendarArray('homeTasks',homeTasks)
+    saveCalendarArray('todayTasks',todayTasks)
+    saveCalendarArray('weekTasks',weekTasks)
+
+
+    //Update display
+    if(projectTitle.textContent === "Home"){displayHomeArray()};
+    if(projectTitle.textContent === "Today"){displayTodayArray()};
+    if(projectTitle.textContent === "This Week"){displayWeekArray()};
+
+    //Save projects object
+    saveProject(projects)
+   
+    taskModal.style.display = 'none'
+    
+    // Reset the edit mode
+    toggleEdit()
+
+   
+   
+}
+
+
+else{
+toDo = createToDo(titleValue,descriptionValue,dueDateValue,priorityValue,key,id,false);
+
+addTaskObjectToProject(toDo);
+toggleNoTasksDisplay(key)
+
+displayProject(key)
+
+//Add Task Object to its respective calendar array.
 addTaskToRespectiveArray()
+
+//Save all
 saveCalendarArray('homeTasks',homeTasks)
 saveCalendarArray('todayTasks',todayTasks)
 saveCalendarArray('weekTasks',weekTasks)
 
+
+const taskForm = document.getElementById('addTaskForm')
+// Clear form inputs
+taskForm.querySelectorAll('input, textarea, select').forEach((element) => {
+    element.value = '';
+  });
+}
  //Save global project object to Storage
  saveProject(projects);
- console.log('Projects after adding task:', projects);
-taskModal.close();
+
+ taskModal.style.display = 'none'
+
     
 })
 
 
-//Preventing default refresh for the Dialog Modal X button
-document.getElementById('closeFormButton').addEventListener('click',(event )=>{
-event.preventDefault();
-taskModal.close();
- })
+
+//Closing dialog event listener for X button
+dialogCloseButton(taskModal)
     
 
-//Form Cancel Button EL
-formCancelButton.addEventListener('click', (event)=>{
-        taskModal.close()
-        
-        //Prevent page refresh upon click
-        event.preventDefault();
+//Closing dialog event listener for Cancel Button
+dialogCancelButton(taskModal)
 
-    })
-
-    
 }
-
