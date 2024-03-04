@@ -1,17 +1,24 @@
-@font-face {
-    font-family: 'Montserrat';
-    src: url('./fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600;700;900&display=swap");
+
 html,body{
     height: 100%;
 }
 
+:root{
+    --primary-gradient: linear-gradient(90deg, #de442a -10.62%, rgba(222, 68, 42, 0.65) 122.12%);
+    --bg-100: #f0f5fe;
+    --white: #f8f8f8;
+    --bg-300: #bdc2cb;
+    --primary-200: #f05c43;
+    --accent-200: #4e42f0;
+}
 body{
     font-family: 'Montserrat', sans-serif;
     margin: 0;
-    background: #e6ebf4
+    background: #e6ebf4;
+    font-size: 18px;
+	font-weight: 400;
+    color: #505050;
 }
 #home,#today,#week{
     cursor: pointer;
@@ -85,6 +92,8 @@ li{
 }
 
 .main-section-header{
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 50px;
     width: 800px;
     
@@ -101,16 +110,53 @@ li{
     border-radius: 10px;
 }
 
+.projectButtonContainer{
+    display: flex;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.projectCancelButton{
+    color: var(--accent-200);
+    border: 2px solid var(--accent-200);
+    padding: 6px 16px;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-family: inherit;
+    font-weight: 700;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.projectAddButton{
+    background: var(--primary-gradient);
+    padding: 8px 24px;
+    border-radius: 8px;
+    color: var(--bg-100);
+    font-family: inherit;
+    font-weight: 700;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+
+}
+.projectInput{
+    height: 30px;
+    width: 170px;
+    border: 2px solid var(--bg-300);
+    color: inherit;
+    border-radius: 5px;
+    font-family: inherit;
+    
+}
 
 
 .headingSection{
     display: flex;
     justify-content: space-between;
-}
-
-.informationIconSection{
-    display: flex;
-    gap: 10px;
 }
 
 .taskHeader{
@@ -125,13 +171,26 @@ li{
     
 }
 
+.priorityImg{
+    border-radius: 50%;
+    height: 30px;
+}
 
 #projectButton{
+    user-select: none;
+    color: var(--bg-100);
+    background: var(--primary-gradient);
+    padding: 7px;
+    border-radius: 100%;
+    width: 7px;
+    height: 7px;
     display: flex;
     justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
     align-items: center;
-    transition: background-color 0.3s ease;
     cursor: pointer;
+    border:none;
 }
 
 #projectButton:hover{
@@ -146,28 +205,44 @@ li{
 
 #closeFormButton{
     display: flex;
-    margin-left: 330px;
     justify-content: center;
     align-items: center;
-    height: 20px;
-    width: 20px;
-    border-radius: 10px;
+    font-weight: bold;
+    background: var(--primary-200);
+    color: var(--white);
+    font-weight: 700;
+    position: absolute;
+    font-size: 10px;
+    top: 15px;
+    right: 15px;
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
 }
 
 #addTaskForm{
    display: flex;
-
+  
    flex-direction: column;
    align-items: start;
+   border-radius: 10px;
+   padding: 20px;
+    
 }
 
 #taskModal{
+    
+    position: absolute;
     border: #bdc2cb;
-    width: 350px;
+    width: 400px;
     height: 550px;
     border-radius: 20px;
-    padding: 20px;
     overflow: hidden;
+    bottom: 200px;
+    right: 0px;
+    
     
 }
 
@@ -179,26 +254,222 @@ li{
     width: 100%;
 }
 
-#homePanel{
-    display: none;
-}
 
-#todayPanel{
-    display: none;
-}
-
-#weekPanel{
-    display: none;
-}
 
 .projectItem{
+    display: flex;
     transition: background-color 0.3 ease;
     cursor: pointer;
     border-radius: 8px;
     padding: 10px;
+    justify-content: space-between;
 }
 
 .projectItem:hover{
     background-color: #e6ebf4;
     
+}
+
+.checkImg{
+    width: 30px;;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dotsImg{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  
+
+}
+
+.websiteLogo{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+
+.dotsImg:hover {
+transform: rotate(360deg);
+}
+   
+.checkImg:hover {
+transform: scale(1.2);
+}
+
+.addTaskButton{
+    display: none;
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    margin-top: 15px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: var(--bg-100);
+    font-weight: 600;
+    background: var(--primary-gradient);
+    font-size: 0.85em;
+   
+  
+}
+
+
+.informationIconSection{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+   
+}
+
+.taskDiv{
+    position: relative;
+    width : 760px;
+    height : 200px;
+    background-color : #f0f5fe;
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    border-radius :15px;
+    padding : 30px;
+    margin-bottom : 20px;  
+    margin-top: 70px; 
+}
+
+.completedTaskDiv{
+    position: relative;
+    width : 760px;
+    height : 200px;
+    background-color : #f0f5fe;
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    border-radius :15px;
+    padding : 30px;
+    margin-bottom : 20px;  
+    margin-top: 70px; 
+}
+
+.taskOptions {
+  
+    display: none;
+    position: absolute;
+    bottom: -40px;
+    right: 70px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+    height: 100px;
+    background: #f0f5fe;
+    padding: 5px;
+    box-shadow: 2px 5px 10px rgb(0, 0, 0, 0.2);
+    width: 120px;
+}
+
+.editOption{
+    display: flex;
+    transition: background-color 0.3 ease;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 8px 0px;
+    cursor: pointer;
+}
+.editOption:hover{
+    background-color: #e6ebf4;
+}
+
+.deletedOption{
+    display: flex;
+    transition: background-color 0.3 ease;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 8px 0px;
+    cursor: pointer;
+}
+.deletedOption:hover{
+    background-color: #e6ebf4;
+}
+
+/* form styling */
+
+.input-container{
+    padding: 5px 0px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#description{
+    color: inherit;
+    border-radius: 5px;
+    font-family: inherit; 
+    border: 2px solid var(--bg-300); 
+}
+
+#addTaskForm input{
+    border: 2px solid var(--bg-300);
+    color: inherit;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+    padding: 8px;
+    margin: 5px 0px;
+}
+
+#priority{
+    width: 300px;
+    height: 45px;
+    border: 2px solid var(--bg-300);
+    color: inherit;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1em;
+    padding: 8px;
+    margin: 5px 0px;
+}
+
+#formCancelButton{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--accent-200);
+    border: 2px solid var(--accent-200);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85em;
+    padding: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    box-shadow: none;
+}
+
+#formAddButton{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    padding: 12px 30px;
+    color: var(--white);
+    background: var(--primary-gradient);
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85em;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 10px;
 }
