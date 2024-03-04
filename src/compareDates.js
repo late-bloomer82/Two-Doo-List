@@ -1,7 +1,7 @@
 import {currentDateToString} from './getCurrentDate';
-import  {add, isWithinInterval, sub } from 'date-fns';
-import { toDo , projects} from './dom';
-import { displayProject } from './displayProject';
+import  {add, isWithinInterval} from 'date-fns';
+import {toDo} from './dom';
+
 import { homeTasks } from './home';
 import { todayTasks } from './today';
 import { weekTasks } from './week';

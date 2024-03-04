@@ -60,18 +60,17 @@ function mainPageContent(){
     buttonContainer.className = 'projectButtonContainer';
 
     
-   //Header Section
+    //Header Section
 
     const header = document.querySelector('header');
+    header.className = 'header';
 
     const websiteLogo = document.createElement('img');
     websiteLogo.className = 'websiteLogo';
     websiteLogo.src = webIcon;
     
     header.appendChild(websiteLogo)
-    header.style.display = 'flex';
-    header.style.justifyContent = 'center';
-
+    
 
     //Sidebar
 
@@ -90,6 +89,7 @@ function mainPageContent(){
     const todayImg = document.createElement('img');
     const weekImg = document.createElement('img');
 
+    //Assigning img elements respective img src file.
     homeImg.src = homeIcon;
     todayImg.src = todayIcon;
     weekImg.src = weekIcon;
@@ -124,9 +124,7 @@ function mainPageContent(){
 
 
     
- 
-  
-    projectButton.addEventListener('click', ()=>{
+projectButton.addEventListener('click', ()=>{
 
         //Creating project form 
         input.className = 'projectInput';
@@ -134,7 +132,6 @@ function mainPageContent(){
         input.placeholder = 'Enter project name...';
        
       
-        
         cancelButton.className = 'projectCancelButton';
         cancelButton.textContent = 'Cancel';
         
@@ -210,17 +207,12 @@ saveProject(projects)
 
 projectItem.addEventListener('click', (event)=>{
     
-    
     addTaskbutton.style.display = 'flex';
     projectName = event.target.textContent;
     
-    
     toggleNoTasksDisplay(projectName)
     displayProject(projectName)
-    projectTitle.textContent = projectName; 
-  
-   
-            
+    projectTitle.textContent = projectName;          
     })
         
 
@@ -228,8 +220,6 @@ projectItem.addEventListener('click', (event)=>{
 form.remove()
  
 })
-
-
 
 
 //Cancel Button Event Listener
@@ -301,8 +291,6 @@ if (editMode) {
     // Reset the edit mode
     toggleEdit()
 
-   
-   
 }
 
 
@@ -336,7 +324,6 @@ taskForm.querySelectorAll('input, textarea, select').forEach((element) => {
 
     
 })
-
 
 
 //Closing dialog event listener for X button

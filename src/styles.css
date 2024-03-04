@@ -43,7 +43,10 @@ body{
     
    
 }
-
+.header{
+    display: flex;
+    justify-content: center;
+}
 header{
     display: flex;
     background: #f0f5fe;

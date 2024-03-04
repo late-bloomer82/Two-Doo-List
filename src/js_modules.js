@@ -2,28 +2,23 @@
 import {priorityIconGreen,priorityIconYellow, priorityIconRed,priorityIconDarkRed,checkIcon,dotsIcon,completedCheck } from './index';
 
 //arrays, functions and variables
-import {projectItems, projectName, projectTitle, projects} from './dom'
-import { homeStorage, saveCalendarArray, saveProject, saveProjectLiArray } from './storage';
+import {projectItems,projectTitle, projects} from './dom'
+import {saveCalendarArray, saveProject, saveProjectLiArray } from './storage';
 import { displayTodayArray, todayTasks } from './today';
 import { displayWeekArray, weekTasks } from './week';
 import { displayHomeArray, homeTasks } from './home';
-import { addTaskToRespectiveArray } from './compareDates';
+
 
 export {closeProject,projectItemMouseOut,projectItemMouseover,appendToDom,homeFindTaskById,weekFindTaskById,todayFindTaskById,toggleEdit,checkifProjectIsEmpty,updateTask,findTaskById,generateRandomId,dialogCloseButton,dialogCancelButton,textContent,toggleNoTasksDisplay,addContent,addTaskObjectToProject,createToDo, createTaskImgs, getPriority}
 
 
 export const taskContainer = document.querySelector('.tasksContainer');
 export const noTasks = document.querySelector('.noTasks');
-let informationIconSection;
-
-
 export let taskDiv;
 export let editMode;
 
-//Select calendar panels
-const home = document.getElementById('home')
-const today = document.getElementById('today')
-const week = document.getElementById('week')
+let informationIconSection;
+
 
 //Create factory function to create objects for each toDoItems
 function createToDo(title,description,dueDate,priority,projectName,id,isCompleted){
@@ -276,7 +271,7 @@ function toggleIsCompletedBoolean(taskObject) {
 
 
  function findTaskById(taskId) {
-   // Iterate through your projects and tasks to find the matching task
+   // Iterate through projects and tasks to find the matching task
    for (const project in projects) {
        const projectTasks = projects[project];
        const foundTask = projectTasks.find(task => task.id === taskId);

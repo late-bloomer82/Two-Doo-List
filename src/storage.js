@@ -1,7 +1,6 @@
 import { closeIcon } from "./index";
 import { projects , projectItems, projectList, projectTitle,addTaskbutton} from "./dom";
-import { addContent, checkifProjectIsEmpty, closeProject, projectItemMouseOut, projectItemMouseover } from "./js_modules";
-import { noTasks ,appendToDom} from "./js_modules";
+import { addContent,closeProject, projectItemMouseOut, projectItemMouseover,noTasks ,appendToDom } from "./js_modules";
 import { displayProject } from "./displayProject";
 import { homeTasks } from "./home";
 
