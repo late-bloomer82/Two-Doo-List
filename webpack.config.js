@@ -19,15 +19,7 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
-      {
-        test: /\.(woff|woff2|ttf|otf)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: 'fonts/[name].[ext]',
-          },
-        },
-      },
+     
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
